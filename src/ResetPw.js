@@ -1,8 +1,19 @@
 import React, {useState} from 'react';
-import {forgotPass} from './Login';
+import {useHistory, Link} from 'react-router-dom';
+import {auth} from './firebase';
 
 export default function ResetPw() {
   const [email, setEmail] = useState('');
+  const history = useHistory();
+
+  const forgotPass = (e) => {
+    auth
+      .sendPasswordResetEmail(e)
+      .then(() => {
+        history.push('/login');
+      })
+      .catch((error) => alert(error.message));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -11,17 +22,23 @@ export default function ResetPw() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <label>
+    <div className="login">
+      <Link to="/">
+        <img
+          className="login__logo"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a9/Amazon_logo.svg/1024px-Amazon_logo.svg.png"
+        />
+      </Link>
+      <div className="login__container">
+        <form onSubmit={handleSubmit}>
           <input
             placeholder="Your Email"
-            type="text"
+            type="email"
             onChange={(e) => setEmail(e.target.value)}
           />
-        </label>
-        <input type="submit" value="Submit" />
-      </form>
+          <button type="submit">Submit</button>
+        </form>
+      </div>
     </div>
   );
 }
