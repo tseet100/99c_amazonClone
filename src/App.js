@@ -11,6 +11,7 @@ import {auth} from './firebase';
 import {useStateValue} from './StateProvider';
 import {loadStripe} from '@stripe/stripe-js';
 import {Elements} from '@stripe/react-stripe-js';
+import ResetPw from './ResetPw';
 
 const promise = loadStripe('pk_test_KbeeDLHcBRMRqJiE0kOotSIC00kBQOk1h1');
 
@@ -44,6 +45,10 @@ function App() {
     <Router>
       <div className="app">
         <Switch>
+          <Route path="/resetpassword">
+            <Header />
+            <ResetPw />
+          </Route>
           <Route path="/orders">
             <Header />
             <Orders />

@@ -1,9 +1,18 @@
 import React, {useState} from 'react';
 import './Login.css';
+import ResetPw from './ResetPw';
 import {Link, useHistory} from 'react-router-dom';
 import {auth} from './firebase';
 import firebase from 'firebase';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+export const forgotPass = (e) => {
+  auth
+    .sendPasswordResetEmail(e)
+    .then(() => {
+      window.alert('Reset link sent to your email!');
+    })
+    .catch((error) => alert(error.message));
+};
 
 function Login() {
   const history = useHistory();
@@ -72,7 +81,14 @@ function Login() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
-
+          {/* <button
+            type="submit"
+            onClick={forgotPass}
+            className="login__signInButton"
+          >
+            Forgot My Password
+          </button> */}
+          <Link to="/resetpassword">Forgot My Password</Link>
           <button
             type="submit"
             onClick={signIn}
